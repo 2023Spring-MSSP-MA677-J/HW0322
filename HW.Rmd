@@ -1,0 +1,28 @@
+---
+title: "hw"
+author: "Tianjian Xie"
+date: "2023-03-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(stats)
+library(dplyr)
+```
+
+**Ans2:**\
+The plug in estimator for p is $\frac {\sum_{i=1}^n X_i}{n}$, the SE of p is $\sqrt{\frac{p \times (1-p)}{n}}$, so the 90% CI of p is $\frac {\sum_{i=1}^n X_i}{n} \pm 1.645 \times \sqrt{\frac{p \times (1-p)}{n}}$. Similarly, the plug in estimator for p-q is $\frac {\sum_{i=1}^n X_i}{n} - \frac {\sum_{i=1}^n Y_i}{m}$, the SE of p-q is $\sqrt{\frac{p \times (1-p)}{n}+\frac{q \times (1-q)}{m}}$, so the 90% CI of p is $\frac {\sum_{i=1}^n X_i}{n} - \frac {\sum_{i=1}^n Y_i}{m} \pm 1.645 \times \sqrt{\frac{p \times (1-p)}{n}+\frac{q \times (1-q)}{m}}$.\
+\
+
+**Ans3:**\
+```{r include=TRUE}
+data <- read.table("fijiquakes.dat",header = TRUE)
+CDF <- ecdf(data$mag)
+plot(CDF)
+expectation <- CDF(4.9)-CDF(4.3)
+sd <-  sd(data$mag)
+CI95_upper <- expectation+1.96*sqrt(sd/1000)
+CI95_lower <- expectation-1.96*sqrt(sd/1000)
+print(c(CI95_lower,CI95_upper))
+```
